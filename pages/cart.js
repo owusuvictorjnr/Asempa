@@ -5,8 +5,9 @@ import Link from 'next/link'
 import React, { useContext } from 'react'
 import { XCircleIcon } from '@heroicons/react/outline'
 import { useRouter } from 'next/router'
+import dynamic from 'next/dynamic'
 
-export default function CartPage() {
+function CartPage() {
   const router = useRouter()
   const { state, dispatch } = useContext(Store)
 
@@ -110,3 +111,5 @@ export default function CartPage() {
     </Layout>
   )
 }
+
+export default dynamic(() => Promise.resolve(CartPage), { ssr: false })
