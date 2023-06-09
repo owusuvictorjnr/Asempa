@@ -1,4 +1,22 @@
+import bcrypt from 'bcryptjs'
+
 const data = {
+  users: [
+    {
+      name: 'Vitech',
+      email: 'admin@example.com',
+      password: bcrypt.hashSync('123456'),
+      isAdmin: true,
+    },
+
+    {
+      name: 'Solution',
+      email: 'solution@example.com',
+      password: bcrypt.hashSync('123456'),
+      isAdmin: false,
+    },
+  ],
+
   products: [
     {
       name: 'Long Sleev',
@@ -70,16 +88,16 @@ const data = {
 export default data
 
 //   export const sampleUsers: User[] = [
-//     {
-//       name: 'Vitech',
-//       email: 'admin@example.com',
-//       password: bcrypt.hashSync('123456'),
-//       isAdmin: true,
-//     },
+// {
+//   name: 'Vitech',
+//   email: 'admin@example.com',
+//   password: bcrypt.hashSync('123456'),
+//   isAdmin: true,
+// },
 
-//     {
-//       name: 'Solution',
-//       email: 'solution@example.com',
-//       password: bcrypt.hashSync('123456'),
-//       isAdmin: false,
-//     },
+// {
+//   name: 'Solution',
+//   email: 'solution@example.com',
+//   password: bcrypt.hashSync('123456'),
+//   isAdmin: false,
+// },
