@@ -34,7 +34,7 @@ export default function LoginPage() {
             type="email"
             className="w-full"
             id="email"
-            autofocus
+            autoFocus
           />
           {errors.email && (
             <div className="text-red-500">{errors.email.message}</div>
@@ -54,7 +54,7 @@ export default function LoginPage() {
             type="password"
             className="w-full"
             id="password"
-            autofocus
+            autoFocus
           />
           {errors.password && (
             <div className="text-red-500">{errors.password.message}</div>
