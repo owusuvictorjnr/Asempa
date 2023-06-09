@@ -1,9 +1,14 @@
 import { Store } from '@/utils/Store'
+import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import Link from 'next/link'
 import React, { useContext, useEffect, useState } from 'react'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export default function Layout({ children, title }) {
+  const { status, data: session } = useSession()
+
   const { state } = useContext(Store)
   const { cart } = state
   const [cartItemsCount, setCartItemsCount] = useState(0)
@@ -17,6 +22,8 @@ export default function Layout({ children, title }) {
         <title>{title ? title + ' Asempa Brand' : 'Asempa Brand'}</title>
         <meta name="description" content="Where Quality Meets Affordability" />
       </Head>
+
+      <ToastContainer position="bottom-center" limit={1} />
 
       <div className="flex min-h-screen flex-col justify-between">
         <header>
@@ -34,9 +41,15 @@ export default function Layout({ children, title }) {
                 )}
               </Link>
 
-              <Link href="/login" className="p-2">
-                Login
-              </Link>
+              {status === 'loading' ? (
+                'Loading'
+              ) : session?.user ? (
+                session.user.name
+              ) : (
+                <Link href="/login" className="p-2">
+                  Login
+                </Link>
+              )}
             </div>
           </nav>
         </header>
