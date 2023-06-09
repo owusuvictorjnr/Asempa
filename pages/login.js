@@ -1,17 +1,44 @@
 import Layout from '@/components/Layout'
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import { signIn, useSession } from 'next-auth/react'
+import { getError } from '@/utils/error'
+import { toast } from 'react-toastify'
+import { useRouter } from 'next/router'
+// import { redirect } from 'next/dist/server/api-utils'
 
 export default function LoginPage() {
+  const { data: session } = useSession()
+
+  const router = useRouter()
+  const { redirect } = router.query
+
+  useEffect(() => {
+    if (session?.user) {
+      router.push(redirect || '/')
+    }
+  }, [router, redirect, session])
+
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = useForm()
 
-  const submitHandler = ({ email, password }) => {
-    console.log(email, password)
+  const submitHandler = async ({ email, password }) => {
+    try {
+      const result = await signIn('credentials', {
+        redirect: false,
+        email,
+        password,
+      })
+      if (result.error) {
+        toast.error(result.error)
+      }
+    } catch (err) {
+      toast.error(getError(err))
+    }
   }
 
   return (
@@ -47,8 +74,8 @@ export default function LoginPage() {
             {...register('password', {
               required: 'Please enter your password',
               minLength: {
-                value: 8,
-                message: 'Password must be at least 8 characters',
+                value: 5,
+                message: 'Password must be at least 5 characters',
               },
             })}
             type="password"
