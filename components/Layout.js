@@ -37,7 +37,10 @@ export default function Layout({ children, title }) {
       <div className="flex min-h-screen flex-col justify-between">
         <header>
           <nav className="flex h-12 justify-between items-center shadow-md px-4">
-            <Link href="/" className="text-lg font-bold capitalize">
+            <Link
+              href="/"
+              className="text-lg font-bold capitalize text-yellow-500"
+            >
               asempa brand
             </Link>
             <div>
