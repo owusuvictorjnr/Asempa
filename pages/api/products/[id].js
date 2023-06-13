@@ -1,6 +1,5 @@
+import Product from '@/models/Product'
 import db from '@/utils/db'
-
-const { default: Product } = require('@/models/Product')
 
 const handler = async (req, res) => {
   await db.connect()
