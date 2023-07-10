@@ -10,7 +10,7 @@ import { useRouter } from 'next/router'
 import React, { useContext, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
-export default function PlaceOrderPage() {
+function PlaceOrderPage() {
   const { state, dispatch } = useContext(Store)
   const { cart } = state
   const { cartItems, shippingAddress, paymentMethod } = cart
@@ -86,8 +86,9 @@ export default function PlaceOrderPage() {
             <div className="card p-5">
               <h2 className="mb-2 text-lg capitalize">shopping address</h2>
               <div>
-                {shippingAddress.fullName}, {shippingAddress.address},{' '}
-                {shippingAddress.city}, {shippingAddress.postalCode},{' '}
+                Name: {shippingAddress.fullName}, Addresss:{' '}
+                {shippingAddress.address}, City: {shippingAddress.city},
+                PostalCode: {shippingAddress.postalCode}, Country:{' '}
                 {shippingAddress.country}
               </div>
               <div>
@@ -96,6 +97,7 @@ export default function PlaceOrderPage() {
                 </Link>
               </div>
             </div>
+
             <div className="card p-5">
               <h2 className="mb-2 text-lg capitalize font-bold">
                 payment method
@@ -146,13 +148,14 @@ export default function PlaceOrderPage() {
                   ))}
                 </tbody>
               </table>
-              <d iv>
+              <div>
                 <Link href="/cart" className="text-blue-500">
                   Edit
                 </Link>
-              </d>
+              </div>
             </div>
           </div>
+
           <div>
             <div className="card p-5">
               <h2 className="mb-2 text-lg capitalize font-bold">
@@ -182,13 +185,6 @@ export default function PlaceOrderPage() {
 
                 <li>
                   <div className="mb-2 flex justify-between">
-                    <div>Tax</div>
-                    <div>${taxPrice}</div>
-                  </div>
-                </li>
-
-                <li>
-                  <div className="mb-2 flex justify-between">
                     <div>Total</div>
                     <div>${totalPrice}</div>
                   </div>
@@ -213,3 +209,4 @@ export default function PlaceOrderPage() {
 }
 
 PlaceOrderPage.auth = true
+export default PlaceOrderPage
