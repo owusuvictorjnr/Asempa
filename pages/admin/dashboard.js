@@ -55,7 +55,7 @@ function AdminDashboardPage() {
         const { data } = await axios.get(`/api/admin/summary`)
         dispatch({ type: 'FETCH_SUCCESS', payload: data })
       } catch (err) {
-        dispatch({ type: 'FETCH_ERROR', payload: getError(err) })
+        dispatch({ type: 'FETCH_FAIL', payload: getError(err) })
       }
     }
 
