@@ -69,7 +69,7 @@ export default function LoginPage() {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="email">Password</label>
+          <label htmlFor="password">Password</label>
           <input
             {...register('password', {
               required: 'Please enter your password',
@@ -81,7 +81,6 @@ export default function LoginPage() {
             type="password"
             className="w-full"
             id="password"
-            autoFocus
           />
           {errors.password && (
             <div className="text-red-500">{errors.password.message}</div>
@@ -94,7 +93,10 @@ export default function LoginPage() {
 
         <div className="mb-4">
           Don&apos;t have an account? &nbsp;
-          <Link href="register" className="text-blue-600">
+          <Link
+            href={`/register?redirect=${redirect || '/'}`}
+            className="text-blue-600"
+          >
             Register
           </Link>
         </div>
