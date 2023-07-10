@@ -76,7 +76,19 @@ export default function Layout({ children, title }) {
                       >
                         order history
                       </DropdownLink>
+
+                      {/* Admin dashboard */}
                     </Menu.Item>
+                    {session.user.isAdmin && (
+                      <Menu.Item>
+                        <DropdownLink
+                          className="dropdown-link"
+                          href="/admin/dashboard"
+                        >
+                          Admin Dashboard
+                        </DropdownLink>
+                      </Menu.Item>
+                    )}
 
                     {/* Log Out */}
                     <Menu.Item>
