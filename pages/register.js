@@ -78,7 +78,7 @@ export default function RegisterPage() {
             {...register('email', {
               required: 'Please enter an email',
               pattern: {
-                value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/,
+                value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/i,
                 message: 'Please enter a valid email',
               },
             })}
