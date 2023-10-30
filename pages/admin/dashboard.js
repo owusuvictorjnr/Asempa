@@ -18,7 +18,7 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
 export const options = {
   responsive: true,
-  Plugin: {
+  plugins: {
     legend: {
       position: 'top',
     },
@@ -68,7 +68,7 @@ function AdminDashboardPage() {
       {
         label: 'Sales',
         backgroundColor: 'rgba(162, 222, 208,1)',
-        data: summary.salesData.map((x) => x.totaSales),
+        data: summary.salesData.map((x) => x.totalSales),
       },
     ],
   }
@@ -110,7 +110,9 @@ function AdminDashboardPage() {
             <div>
               <div className="grid grid-cols-1 md:grid-cols-4">
                 <div className="card m-5 p-5">
-                  <p className="text-3xl">${summary.ordersPrice}</p>
+                  <p className="md:text-xl md:font-bold text-3xl">
+                    ${summary.ordersPrice}
+                  </p>
                   <p>Sales</p>
                   <Link href="/admin/orders" className="text-blue-500">
                     View sales
@@ -134,7 +136,7 @@ function AdminDashboardPage() {
                 </div>
 
                 <div className="card m-5 p-5">
-                  <p className="text-3xl">{summary.userCount}</p>
+                  <p className="text-3xl">{summary.usersCount}</p>
                   <p>Users</p>
                   <Link href="/admin/users" className="text-blue-500">
                     View users
@@ -144,7 +146,9 @@ function AdminDashboardPage() {
               {/* Sales Report */}
               <h2 className="text-xl font-bold">Sales Report</h2>
               <Bar
-                options={{ legend: { display: true, position: 'right' } }}
+                options={{
+                  legend: { display: true, position: 'right' },
+                }}
                 data={data}
               />{' '}
             </div>
