@@ -10,7 +10,7 @@ import { useRouter } from 'next/router'
 import React, { useContext, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
-function PlaceOrderPage() {
+export default function PlaceOrderPage() {
   const { state, dispatch } = useContext(Store)
   const { cart } = state
   const { cartItems, shippingAddress, paymentMethod } = cart
@@ -31,6 +31,7 @@ function PlaceOrderPage() {
   const totalPrice = round2(itemsPrice + shippingPrice + taxPrice)
 
   const router = useRouter()
+
   useEffect(() => {
     if (!paymentMethod) {
       router.push('/payment')
@@ -43,15 +44,33 @@ function PlaceOrderPage() {
     try {
       setLoading(true)
 
-      const { data } = await axios.post('/api/orders', {
-        orderItems: cartItems,
-        shippingAddress,
-        paymentMethod,
-        itemsPrice,
-        shippingPrice,
-        taxPrice,
-        totalPrice,
-      })
+      const { data } = await axios.post(
+        '/api/orders',
+        {
+          orderItems: cartItems,
+          shippingAddress,
+          paymentMethod,
+          itemsPrice,
+          shippingPrice,
+          taxPrice,
+          totalPrice,
+        },
+        {
+          withCredentials: true,
+        }
+      )
+
+      // Are you using cookies or jwt?
+
+      // both but cookies for the clientside storage
+
+      // does it mean the user is sendt along with the payload  authormatic?
+
+      // yes it should send with the payload authormatic
+
+
+      // try again and let me see
+
       setLoading(false)
       dispatch({ type: 'CART_CLEAR_ITEMS' })
       Cookies.set(
@@ -66,9 +85,11 @@ function PlaceOrderPage() {
     } catch (err) {
       setLoading(false)
       toast.error(getError(err))
+
+      console.error(err)
     }
   }
-
+  // console.log(data._id)
   return (
     <Layout title="Place Order">
       <CheckoutWizard activeStep={3} />
@@ -84,6 +105,7 @@ function PlaceOrderPage() {
         <div className="grid md:grid-cols-4 md:gap-5">
           <div className="overflow-x-auto md:col-span-3">
             <div className="card p-5">
+              {/* Shippimg Address */}
               <h2 className="mb-2 text-lg capitalize">shopping address</h2>
               <div>
                 Name: {shippingAddress.fullName}, Addresss:{' '}
@@ -98,6 +120,7 @@ function PlaceOrderPage() {
               </div>
             </div>
 
+            {/* Payment Method */}
             <div className="card p-5">
               <h2 className="mb-2 text-lg capitalize font-bold">
                 payment method
@@ -110,6 +133,7 @@ function PlaceOrderPage() {
               </div>
             </div>
 
+            {/* Order Items */}
             <div className="card overflow-x-auto p-5 mt-5">
               <h2 className="mb-2 text-lg capitalize">order items</h2>
               <table className="min-w-full">
@@ -126,7 +150,7 @@ function PlaceOrderPage() {
                     <tr key={item._id} className="border-b">
                       <td>
                         <Link
-                          href={`/product/${item._slug}`}
+                          href={`/product/${item.slug}`}
                           className="flex items-center"
                         >
                           <Image
@@ -156,6 +180,7 @@ function PlaceOrderPage() {
             </div>
           </div>
 
+          {/* Order Summary */}
           <div>
             <div className="card p-5">
               <h2 className="mb-2 text-lg capitalize font-bold">
@@ -209,4 +234,4 @@ function PlaceOrderPage() {
 }
 
 PlaceOrderPage.auth = true
-export default PlaceOrderPage
+// export default PlaceOrderPage
