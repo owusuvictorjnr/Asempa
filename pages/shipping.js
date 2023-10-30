@@ -76,7 +76,7 @@ export default function ShippingPage() {
           <input
             className="w-full"
             id="address"
-            autoFocus
+            // autoFocus
             {...register('address', {
               required: 'Please enter address',
               minLength: {
@@ -97,7 +97,7 @@ export default function ShippingPage() {
           <input
             className="w-full"
             id="city"
-            autoFocus
+            // autoFocus
             {...register('city', { required: 'Please enter city' })}
           />
           {errors.city && (
@@ -112,7 +112,7 @@ export default function ShippingPage() {
           <input
             className="w-full"
             id="postalCode"
-            autoFocus
+            // autoFocus
             {...register('postalCode', {
               required: 'Please enter postal code',
             })}
@@ -129,7 +129,7 @@ export default function ShippingPage() {
           <input
             className="w-full"
             id="country"
-            autoFocus
+            // autoFocus
             {...register('country', {
               required: 'Please enter country',
             })}
