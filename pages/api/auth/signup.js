@@ -15,7 +15,7 @@ async function handler(req, res) {
     !password ||
     password.trim().length < 5
   ) {
-    res.status(422).jsos({ message: 'Validation Error' })
+    res.status(422).json({ message: 'Validation Error' })
     return
   }
 
@@ -24,7 +24,7 @@ async function handler(req, res) {
   const existingUser = await User.findOne({ email: email })
 
   if (existingUser) {
-    res.status(422).jsos({ message: 'User already exists' })
+    res.status(422).json({ message: 'User already exists' })
 
     await db.disconnect()
     return
@@ -39,14 +39,12 @@ async function handler(req, res) {
 
   const user = await newUser.save()
   await db.disconnect()
-  res
-    .status(201)
-    .send({
-      message: 'Created User',
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      isAdmin: user.isAdmin,
-    })
+  res.status(201).send({
+    message: 'Created User',
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    isAdmin: user.isAdmin,
+  })
 }
 export default handler
