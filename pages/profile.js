@@ -24,7 +24,7 @@ export default function ProfilePage() {
 
   const submitHandler = async ({ name, email, password }) => {
     try {
-      await axios.put('/api/auth/update'  , {
+      await axios.put('/api/auth/update', {
         name,
         email,
         password,
