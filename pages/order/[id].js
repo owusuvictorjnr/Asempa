@@ -1,11 +1,10 @@
-import { getError } from '@/utils/error'
-import axios from 'axios'
 import Image from 'next/image'
 import Link from 'next/link'
-
-const { default: Layout } = require('@/components/Layout')
-const { useRouter } = require('next/router')
-const { useReducer, useEffect } = require('react')
+import { useRouter } from 'next/router'
+import { useEffect, useReducer } from 'react'
+import Layout from '@/components/Layout'
+import axios from 'axios'
+import { getError } from '@/utils/error'
 
 function reducer(state, action) {
   switch (action.type) {
@@ -18,8 +17,20 @@ function reducer(state, action) {
     case 'FETCH_FAIL':
       return { ...state, loading: false, error: action.payload }
 
+    // case 'PAY_REQUEST':
+    //   return { ...state, loadingPay: true }
+
+    // case 'PAY_SUCCESS':
+    //   return { ...state, loadingPay: false, successPay: true }
+
+    // case 'PAY_FAIL':
+    //   return { ...state, loadingPay: false, errorPay: action.payload }
+
+    // case 'PAY_RESET':
+    //   return { ...state, loadingPay: false, successPay: false, errorPay: '' }
+
     default:
-      return state
+      state
   }
 }
 
@@ -27,7 +38,18 @@ function OrderPage() {
   const { query } = useRouter()
   const orderId = query.id
 
-  const [{ loading, error, order }, dispatch] = useReducer(reducer, {
+  const [
+    {
+      loading,
+      error,
+      order,
+      // successPay,
+      // loadingPay,
+      // loadingDelivery,
+      // successDelivery,
+    },
+    dispatch,
+  ] = useReducer(reducer, {
     loading: true,
     order: {},
     error: '',
@@ -43,11 +65,11 @@ function OrderPage() {
         dispatch({ type: 'FETCH_FAIL', payload: getError(err) })
       }
     }
+
     if (!order._id || (order._id && order._id !== orderId)) {
       fetchOrder()
     }
   }, [order, orderId])
-
   const {
     shippingAddress,
     paymentMethod,
@@ -73,7 +95,9 @@ function OrderPage() {
         <div className="grid md:grid-cols-4 md:gap-5">
           <div className="overflow-x-auto md:col-span-3">
             <div className="card p-5">
-              <h2 className="mb-2 text-lg capitalize">shipping adress</h2>
+              <h2 className="mb-2 text-lg capitalize font-bold">
+                shipping address
+              </h2>
               <div>
                 {shippingAddress.fullName}, {shippingAddress.address},{' '}
                 {shippingAddress.city}, {shippingAddress.postalCode},{' '}
@@ -88,7 +112,7 @@ function OrderPage() {
 
             {/* Payment */}
             <div className="card p-5">
-              <h2 className="mb-2 text-lg">Payment Method</h2>
+              <h2 className="mb-2 text-lg font-bold">Payment Method</h2>
               <div>{paymentMethod}</div>
               {isPaid ? (
                 <div className="alert-success">Paid at {paidAt}</div>
@@ -99,7 +123,7 @@ function OrderPage() {
 
             {/* Order Items */}
             <div className="card overflow-x-auto p-5">
-              <h2 className="mb-2 text-lg capitalize">order itms</h2>
+              <h2 className="mb-2 text-lg capitalize font-bold">order items</h2>
               <table className="min-w-full">
                 <thead className="border-b">
                   <tr>
@@ -115,7 +139,7 @@ function OrderPage() {
                     <tr key={item._id} className="border-b">
                       <td>
                         <Link
-                          href={`/product/${item._slug}`}
+                          href={`/product/${item.slug}`}
                           className="flex items-center"
                         >
                           <Image
@@ -144,28 +168,30 @@ function OrderPage() {
           {/* Order Summary */}
           <div>
             <div className="card p-5">
-              <h2 className="mb-2 text-lg capitalize">order summary</h2>
+              <h2 className="mb-2 text-lg capitalize font-bold text-center">
+                order summary
+              </h2>
               <ul>
                 <li>
-                  <div className="mb-2 flx justify-between">
+                  <div className="mb-2 flex justify-between">
                     <div>Item</div>
                     <div>${itemsPrice}</div>
                   </div>
                 </li>{' '}
                 <li>
-                  <div className="mb-2 flx justify-between">
+                  <div className="mb-2 flex justify-between">
                     <div>Tax</div>
                     <div>${taxPrice}</div>
                   </div>
                 </li>
                 <li>
-                  <div className="mb-2 flx justify-between">
+                  <div className="mb-2 flex justify-between">
                     <div>Shipping</div>
                     <div>${shippingPrice}</div>
                   </div>
                 </li>
                 <li>
-                  <div className="mb-2 flx justify-between">
+                  <div className="mb-2 flex justify-between">
                     <div>Total</div>
                     <div>${totalPrice}</div>
                   </div>
