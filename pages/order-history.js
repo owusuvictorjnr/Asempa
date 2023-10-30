@@ -72,22 +72,26 @@ function OrderHistoryPage() {
 
                   <td className="p-5">{order.createdAt.substring(0, 10)}</td>
 
-                  <td className="p-5">{order.totalPrice}</td>
+                  <td className="p-5">${order.totalPrice}</td>
 
-                  <td className="p-5">
+                  <td className="p-5 capitalize">
                     {order.isPaid
                       ? `${order.paidAt.substring(0, 10)}`
                       : 'not paid'}
                   </td>
 
-                  <td className="p-5">
+                  <td className="p-5 capitalize">
                     {order.isdelivered
                       ? `${order.deliveredAt.substring(0, 10)}`
                       : 'not delivered'}
                   </td>
 
                   <td className="p-5">
-                    <Link href={`/order/${order._id}`} passHref>
+                    <Link
+                      href={`/order/${order._id}`}
+                      passHref
+                      className="text-blue-500"
+                    >
                       {' '}
                       <a>Details</a>
                     </Link>
