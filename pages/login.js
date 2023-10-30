@@ -76,7 +76,7 @@ export default function LoginPage() {
               minLength: {
                 value: 5,
                 message: 'Password must be at least 5 characters',
-              },
+              },  
             })}
             type="password"
             className="w-full"
