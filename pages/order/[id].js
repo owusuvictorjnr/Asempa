@@ -5,6 +5,8 @@ import { useEffect, useReducer } from 'react'
 import Layout from '@/components/Layout'
 import axios from 'axios'
 import { getError } from '@/utils/error'
+import { toast } from 'react-toastify'
+import { useSession } from 'next-auth/react'
 
 function reducer(state, action) {
   switch (action.type) {
@@ -16,6 +18,22 @@ function reducer(state, action) {
 
     case 'FETCH_FAIL':
       return { ...state, loading: false, error: action.payload }
+
+    case 'DELIVER_REQUEST':
+      return { ...state, loadingDeliver: true }
+
+    case 'DELIVER_SUCCESS':
+      return { ...state, loadingDeliver: false, successDeliver: true }
+
+    case 'DELIVER_FAIL':
+      return { ...state, loadingDeliver: false }
+
+    case 'DELIVER_RESET':
+      return {
+        ...state,
+        loadingDeliver: false,
+        successDeliver: false,
+      }
 
     // case 'PAY_REQUEST':
     //   return { ...state, loadingPay: true }
@@ -35,6 +53,7 @@ function reducer(state, action) {
 }
 
 function OrderPage() {
+  const { data: session } = useSession()
   const { query } = useRouter()
   const orderId = query.id
 
@@ -45,8 +64,8 @@ function OrderPage() {
       order,
       // successPay,
       // loadingPay,
-      // loadingDelivery,
-      // successDelivery,
+      loadingDeliver,
+      successDeliver,
     },
     dispatch,
   ] = useReducer(reducer, {
@@ -66,10 +85,15 @@ function OrderPage() {
       }
     }
 
-    if (!order._id || (order._id && order._id !== orderId)) {
+    if (!order._id || successDeliver || (order._id && order._id !== orderId)) {
       fetchOrder()
+      // TODO:stipe payment condition here
+
+      if (successDeliver) {
+        dispatch({ type: 'DELIVER_RESET' })
+      }
     }
-  }, [order, orderId])
+  }, [order, orderId, successDeliver])
   const {
     shippingAddress,
     paymentMethod,
@@ -83,6 +107,21 @@ function OrderPage() {
     isDelivered,
     deliveredAt,
   } = order
+
+  async function deliveredOrderHandler() {
+    try {
+      dispatch({ type: 'DELIVER_REQUEST' })
+      const { data } = await axios.put(
+        `/api/admin/orders/${order._id}/deliver`,
+        {}
+      )
+      dispatch({ type: 'DELIVER_SUCCESS', payload: data })
+      toast.success('Order delivered successfully')
+    } catch (err) {
+      dispatch({ type: 'DELIVER_FAIL, payload: getError(err)' })
+      toast.error(getError(err))
+    }
+  }
 
   return (
     <Layout title={`Order ${orderId}`}>
@@ -196,6 +235,18 @@ function OrderPage() {
                     <div>${totalPrice}</div>
                   </div>
                 </li>
+                {/*TODO: Stripe payment goes here */}
+                {session.user.isAdmin && order.isPaid && !order.isDelivered && (
+                  <li>
+                    {loadingDeliver && <div>Loading...</div>}
+                    <button
+                      onClick={deliveredOrderHandler}
+                      className="primary-btn w-full capitalize"
+                    >
+                      deliver order
+                    </button>
+                  </li>
+                )}
               </ul>
             </div>
           </div>
