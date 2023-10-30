@@ -20,7 +20,7 @@ const handler = async (req, res) => {
     {
       $group: {
         _id: null,
-        sale: { $sum: '$totalPrice' },
+        sales: { $sum: '$totalPrice' },
       },
     },
   ])
