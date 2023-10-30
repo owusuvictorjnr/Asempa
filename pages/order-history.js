@@ -93,7 +93,7 @@ function OrderHistoryPage() {
                       className="text-blue-500"
                     >
                       {' '}
-                      <a>Details</a>
+                      Details
                     </Link>
                   </td>
                 </tr>
