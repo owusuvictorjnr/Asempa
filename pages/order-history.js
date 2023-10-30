@@ -41,7 +41,7 @@ function OrderHistoryPage() {
   }, [])
   return (
     <Layout title="Order History">
-      <h1 className="mb-4 text-xl font-bold">Order Histoy</h1>
+      <h1 className="mb-4 text-xl font-bold">Order History</h1>
       {loading ? (
         <div>Loading...</div>
       ) : error ? (
