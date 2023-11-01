@@ -29,6 +29,8 @@ const data = {
       rating: 4.5,
       description: 'high quality African ware',
       numReviews: 10,
+      isFeatured: true,
+      banner: 'img/pic5.jpg',
     },
 
     {
@@ -42,6 +44,8 @@ const data = {
       rating: 4.5,
       description: 'high quality African ware',
       numReviews: 10,
+      isFeatured: true,
+      banner: 'img/pic6.jpg',
     },
 
     {
