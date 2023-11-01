@@ -30,7 +30,7 @@ const data = {
       description: 'high quality African ware',
       numReviews: 10,
       isFeatured: true,
-      banner: 'img/pic5.jpg',
+      banner: '/img/pic5.jpg',
     },
 
     {
@@ -45,7 +45,7 @@ const data = {
       description: 'high quality African ware',
       numReviews: 10,
       isFeatured: true,
-      banner: 'img/pic6.jpg',
+      banner: '/img/pic6.jpg',
     },
 
     {
