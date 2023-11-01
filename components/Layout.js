@@ -8,6 +8,8 @@ import { Menu } from '@headlessui/react'
 import 'react-toastify/dist/ReactToastify.css'
 import DropdownLink from './DropdownLink'
 import Cookies from 'js-cookie'
+import { useRouter } from 'next/router'
+import { SearchIcon } from '@heroicons/react/outline'
 
 export default function Layout({ children, title }) {
   const { status, data: session } = useSession()
@@ -25,6 +27,14 @@ export default function Layout({ children, title }) {
     signOut({ callbackUrl: '/login' })
   }
 
+  const [query, setQuery] = useState('')
+
+  const router = useRouter()
+
+  const submitHandler = (e) => {
+    e.preventDefault()
+    router.push(`search?query=${query}`)
+  }
   return (
     <>
       <Head>
@@ -35,14 +45,36 @@ export default function Layout({ children, title }) {
       <ToastContainer position="bottom-center" limit={1} />
 
       <div className="flex min-h-screen flex-col justify-between">
-        <header>
-          <nav className="flex h-12 justify-between items-center shadow-md px-4">
+        <headers>
+          <nav className="flex h-12 justify-between  items-center shadow-md px-10 ">
             <Link
               href="/"
-              className="text-lg font-bold capitalize text-yellow-500"
+              className="text-lg font-bold capitalize text-yellow-500  flex"
             >
               asempa brand
             </Link>
+
+            {/* Search button */}
+            <form
+              className="mx-auto hidden w-full justify-center md:flex"
+              onSubmit={submitHandler}
+            >
+              <input
+                onChange={(e) => setQuery(e.target.value)}
+                type="search"
+                placeholder="Search products"
+                className="p-1 text-sm rounded-tr-none rounded-br-none focus:ring-0"
+              />
+
+              <button
+                type="submit"
+                id="button-addon2"
+                className="rounded rounded-tl-none rounded-bl-none bg-amber-300 p-1 text-sm dark:text-black"
+              >
+                <SearchIcon className="h-5 w-5" />
+              </button>
+            </form>
+
             <div>
               <Link href="/cart" className="p-2 text-blue-600">
                 Cart
@@ -109,7 +141,7 @@ export default function Layout({ children, title }) {
               )}
             </div>
           </nav>
-        </header>
+        </headers>
 
         <main className="container m-auto mt-4 px-4">{children}</main>
 
