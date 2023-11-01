@@ -60,7 +60,7 @@ export default function Layout({ children, title }) {
                   <Menu.Button className="text-blue-600">
                     {session.user.name}
                   </Menu.Button>
-                  <Menu.Items className="absolute right-0 w-56 origin-top-right bg-white shadow-lg">
+                  <Menu.Items className="absolute right-0 w-56 origin-top-right bg-white shadow-lg z-10">
                     {/* Profile */}
                     <Menu.Item>
                       <DropdownLink className="dropdown-link" href="/profile">
