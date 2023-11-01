@@ -60,17 +60,6 @@ export default function PlaceOrderPage() {
         }
       )
 
-      // Are you using cookies or jwt?
-
-      // both but cookies for the clientside storage
-
-      // does it mean the user is sendt along with the payload  authormatic?
-
-      // yes it should send with the payload authormatic
-
-
-      // try again and let me see
-
       setLoading(false)
       dispatch({ type: 'CART_CLEAR_ITEMS' })
       Cookies.set(
