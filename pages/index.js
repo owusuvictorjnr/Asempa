@@ -9,6 +9,7 @@ import { toast } from 'react-toastify'
 import { Carousel } from 'react-responsive-carousel'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Home({ products, featuredProducts }) {
   const { state, dispatch } = useContext(Store)
@@ -33,14 +34,20 @@ export default function Home({ products, featuredProducts }) {
       <Carousel showThumbs={false} autoPlay={true} infiniteLoop>
         {featuredProducts.map((product) => (
           <div key={product._id}>
-            <Link href={`/product/${product.slug}`} passHref className="flex">
-              <img src={product.banner} alt={product.name} />
+            <Link href={`/product/${product.slug}`} passHref className="flex ">
+              <Image
+                src={product.banner}
+                alt={product.name}
+                height={1000}
+                width={1000}
+                className="w-full h-[20rem] lg:h-[40rem]"
+              />
             </Link>
           </div>
         ))}
       </Carousel>
 
-      <h2 className="capitalize h-2 my-4">latest products</h2>
+      <h2 className="capitalize h-2 my-4 font-bold">latest products</h2>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
         {products.map((product) => (
           <ProductItem
