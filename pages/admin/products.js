@@ -169,14 +169,16 @@ export default function AdminProductsPage() {
                       <td className="p-5 flex">
                         <Link
                           href={`/admin/product/${product._id}`}
-                          className="text-blue-500"
+                          className="hover:text-blue-500 default-btn"
+                          type="button"
                         >
                           Edit
                         </Link>
                         &nbsp;
                         <button
+                        type='button' 
                           onClick={() => deleteHandler(product._id)}
-                          className="text-red-500 capitalize"
+                          className="hover:text-red-500 capitalize default-btn"
                         >
                           delete
                         </button>
