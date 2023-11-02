@@ -2,12 +2,15 @@ import Layout from '@/components/Layout'
 import { getError } from '@/utils/error'
 import axios from 'axios'
 import { signIn, useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
 export default function ProfilePage() {
   const { data: session } = useSession()
+
+  const router = useRouter()
 
   const {
     handleSubmit,
@@ -37,6 +40,8 @@ export default function ProfilePage() {
       })
 
       toast.success('Profile updated successfully')
+
+      router.push(`/`)
 
       if (result.error) {
         toast.error(result.error)

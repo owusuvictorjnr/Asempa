@@ -34,7 +34,11 @@ export default function Home({ products, featuredProducts }) {
       <Carousel showThumbs={false} autoPlay={true} infiniteLoop>
         {featuredProducts.map((product) => (
           <div key={product._id}>
-            <Link href={`/product/${product.slug}`} passHref className="flex ">
+            <Link
+              href={`/product/${product.slug}`}
+              passHref
+              className="flex "
+              legacyBehavior>
               <Image
                 src={product.banner}
                 alt={product.name}
@@ -58,7 +62,7 @@ export default function Home({ products, featuredProducts }) {
         ))}
       </div>
     </Layout>
-  )
+  );
 }
 
 export async function getServerSideProps() {

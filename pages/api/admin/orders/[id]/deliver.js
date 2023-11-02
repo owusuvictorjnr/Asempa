@@ -1,11 +1,11 @@
 import db from '@/utils/db'
-import { getSession } from 'next-auth/react'
+import { getToken } from 'next-auth/react'
 
 const { default: Order } = require('@/models/Order')
 
 const handler = async (req, res) => {
-  const session = await getSession({ req })
-  if (!session || (session && !session.user.isAdmin)) {
+  const user = await getToken({ req })
+  if (!user || (user && !user.isAdmin)) {
     return res.status(401).send('Error: sign in required ')
   }
 

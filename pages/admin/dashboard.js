@@ -150,7 +150,7 @@ function AdminDashboardPage() {
                   legend: { display: true, position: 'right' },
                 }}
                 data={data}
-              />{' '}
+              />
             </div>
           )}
         </div>
