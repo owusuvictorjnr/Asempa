@@ -50,7 +50,7 @@ export default function Layout({ children, title }) {
             <div className="flex items-center z-10">
               <Link
                 href="/"
-                className="text-lg font-bold capitalize text-yellow-500 flex"
+                className="text-sm md:text-lg font-bold capitalize text-yellow-500 flex"
               >
                 asempa brand
               </Link>
@@ -78,7 +78,10 @@ export default function Layout({ children, title }) {
             </form>
 
             <div className="flex items-center z-10">
-              <Link href="/cart" className="p-2 text-blue-600">
+              <Link
+                href="/cart"
+                className="p-2 text-blue-600 text-sm md:text-lg"
+              >
                 Cart
                 {cartItemsCount > 0 && (
                   <span className="ml-1 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">
@@ -91,7 +94,7 @@ export default function Layout({ children, title }) {
                 'Loading'
               ) : session?.user ? (
                 <Menu as="div" className="relative inline-block">
-                  <Menu.Button className="text-blue-600">
+                  <Menu.Button className="text-blue-600 text-sm md:text-lg">
                     {session.user.name}
                   </Menu.Button>
                   <Menu.Items className="absolute right-0 w-56 origin-top-right bg-white shadow-lg z-10">
@@ -146,6 +149,8 @@ export default function Layout({ children, title }) {
         </headers>
 
         <main className="container m-auto mt-4 px-4">{children}</main>
+
+        {/* Footer */}
 
         <footer className="flex h-[10rem] justify-center items-center shadow-inner">
           <p>Copyright &copy; 2023 Asempa Brand</p>
