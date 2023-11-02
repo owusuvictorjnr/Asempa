@@ -58,7 +58,7 @@ export default function Layout({ children, title }) {
 
             {/* Search button */}
             <form
-              className="mx-auto hidden justify-center md:flex"
+              className="mx-auto justify-center md:flex"
               onSubmit={submitHandler}
             >
               <input
@@ -71,9 +71,9 @@ export default function Layout({ children, title }) {
               <button
                 type="submit"
                 id="button-addon2"
-                className="rounded rounded-tl-none rounded-bl-none bg-amber-300 p-1 text-sm dark:text-black"
+                className="rounded rounded-tl-none rounded-bl-none hidden md:flex  bg-amber-300 p-1 text-sm dark:text-black"
               >
-                <SearchIcon className="h-5 w-5" />
+                <SearchIcon className="h-5 w-5 " />
               </button>
             </form>
 
