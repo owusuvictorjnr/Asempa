@@ -38,7 +38,8 @@ export default function Home({ products, featuredProducts }) {
               href={`/product/${product.slug}`}
               passHref
               className="flex "
-              legacyBehavior>
+              legacyBehavior
+            >
               <Image
                 src={product.banner}
                 alt={product.name}
@@ -62,7 +63,7 @@ export default function Home({ products, featuredProducts }) {
         ))}
       </div>
     </Layout>
-  );
+  )
 }
 
 export async function getServerSideProps() {
