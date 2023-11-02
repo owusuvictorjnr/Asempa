@@ -76,7 +76,7 @@ function AdminDashboardPage() {
   return (
     <Layout title="Admin Dashboard">
       <div className="grid md:grid-cols-4 md:gap-5">
-        <div>
+        <div className="mt-[5rem]">
           <ul>
             <li>
               <Link href="/admin/dashboard" className="font-bold capitalize">

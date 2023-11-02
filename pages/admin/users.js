@@ -67,7 +67,7 @@ function AdminUsersPage() {
   }
   return (
     <Layout title="Users">
-      <div className="grid md:grid-cols-4 md:gap-5">
+      <div className="grid md:grid-cols-4 md:gap-5 mt-[5rem]">
         <div>
           <ul>
             <li>
@@ -100,7 +100,7 @@ function AdminUsersPage() {
         </div>
 
         <div className="overflow-x-auto md:col-span-3">
-          <h1 className="mb-4 text-xl capitalize">users</h1>
+          <h1 className="mb-4 text-xl capitalize font-bold">users</h1>
           {loadingDelete && <div className="">Deleting...</div>}
           {loading ? (
             <div>Loading...</div>

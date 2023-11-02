@@ -97,7 +97,7 @@ export default function AdminProductsPage() {
   }
   return (
     <Layout title="Admin Products">
-      <div className="grid md:grid-cols-4 md:gap-5">
+      <div className="grid md:grid-cols-4 md:gap-5 mt-[5rem]">
         <div>
           <ul>
             <li>
@@ -128,7 +128,7 @@ export default function AdminProductsPage() {
 
         <div className="overflow-x-auto md:col-span-3">
           <div className="flex justify-between">
-            <hi className="mb-4 text-xl capitalize">products</hi>
+            <hi className="mb-4 text-xl capitalize font-bold">admin products</hi>
             {loadingDelete && <div className="">Deleting item...</div>}
             <button
               className="primary-btn"
