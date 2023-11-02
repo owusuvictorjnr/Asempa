@@ -54,6 +54,8 @@ function reducer(state, action) {
 
 function OrderPage() {
   const { data: session } = useSession()
+  // order/:id
+
   const { query } = useRouter()
   const orderId = query.id
 
@@ -73,7 +75,6 @@ function OrderPage() {
     order: {},
     error: '',
   })
-
   useEffect(() => {
     const fetchOrder = async () => {
       try {
@@ -84,14 +85,8 @@ function OrderPage() {
         dispatch({ type: 'FETCH_FAIL', payload: getError(err) })
       }
     }
-
     if (!order._id || successDeliver || (order._id && order._id !== orderId)) {
       fetchOrder()
-      // TODO:stipe payment condition here
-
-      if (successDeliver) {
-        dispatch({ type: 'DELIVER_RESET' })
-      }
     }
   }, [order, orderId, successDeliver])
   const {
@@ -108,7 +103,7 @@ function OrderPage() {
     deliveredAt,
   } = order
 
-  async function deliveredOrderHandler() {
+  async function deliverOrderHandler() {
     try {
       dispatch({ type: 'DELIVER_REQUEST' })
       const { data } = await axios.put(
@@ -116,9 +111,9 @@ function OrderPage() {
         {}
       )
       dispatch({ type: 'DELIVER_SUCCESS', payload: data })
-      toast.success('Order delivered successfully')
+      toast.success('Order is delivered')
     } catch (err) {
-      dispatch({ type: 'DELIVER_FAIL, payload: getError(err)' })
+      dispatch({ type: 'DELIVER_FAIL', payload: getError(err) })
       toast.error(getError(err))
     }
   }
@@ -133,10 +128,8 @@ function OrderPage() {
       ) : (
         <div className="grid md:grid-cols-4 md:gap-5">
           <div className="overflow-x-auto md:col-span-3">
-            <div className="card p-5">
-              <h2 className="mb-2 text-lg capitalize font-bold">
-                shipping address
-              </h2>
+            <div className="card  p-5">
+              <h2 className="mb-2 text-lg">Shipping Address</h2>
               <div>
                 {shippingAddress.fullName}, {shippingAddress.address},{' '}
                 {shippingAddress.city}, {shippingAddress.postalCode},{' '}
@@ -149,30 +142,27 @@ function OrderPage() {
               )}
             </div>
 
-            {/* Payment */}
             <div className="card p-5">
-              <h2 className="mb-2 text-lg font-bold">Payment Method</h2>
+              <h2 className="mb-2 text-lg">Payment Method</h2>
               <div>{paymentMethod}</div>
               {isPaid ? (
                 <div className="alert-success">Paid at {paidAt}</div>
               ) : (
-                <div className="alert-error">Not Paid</div>
+                <div className="alert-error">Not paid</div>
               )}
             </div>
 
-            {/* Order Items */}
             <div className="card overflow-x-auto p-5">
-              <h2 className="mb-2 text-lg capitalize font-bold">order items</h2>
+              <h2 className="mb-2 text-lg">Order Items</h2>
               <table className="min-w-full">
                 <thead className="border-b">
                   <tr>
                     <th className="px-5 text-left">Item</th>
-                    <th className="p-5 text-right">Quantity</th>
-                    <th className="p-5 text-right">Price</th>
+                    <th className="    p-5 text-right">Quantity</th>
+                    <th className="  p-5 text-right">Price</th>
                     <th className="p-5 text-right">Subtotal</th>
                   </tr>
                 </thead>
-
                 <tbody>
                   {orderItems.map((item) => (
                     <tr key={item._id} className="border-b">
@@ -182,17 +172,19 @@ function OrderPage() {
                           className="flex items-center"
                         >
                           <Image
-                            src={item.Image}
+                            src={item.image}
                             alt={item.name}
                             width={50}
                             height={50}
-                          />
-                          &nbsp;
+                            style={{
+                              maxWidth: '100%',
+                              height: 'auto',
+                            }}
+                          ></Image>
                           {item.name}
                         </Link>
                       </td>
-
-                      <td className="p-5 text-right">{item.quantity}</td>
+                      <td className=" p-5 text-right">{item.quantity}</td>
                       <td className="p-5 text-right">${item.price}</td>
                       <td className="p-5 text-right">
                         ${item.quantity * item.price}
@@ -203,17 +195,13 @@ function OrderPage() {
               </table>
             </div>
           </div>
-
-          {/* Order Summary */}
           <div>
-            <div className="card p-5">
-              <h2 className="mb-2 text-lg capitalize font-bold text-center">
-                order summary
-              </h2>
+            <div className="card  p-5">
+              <h2 className="mb-2 text-lg">Order Summary</h2>
               <ul>
                 <li>
                   <div className="mb-2 flex justify-between">
-                    <div>Item</div>
+                    <div>Items</div>
                     <div>${itemsPrice}</div>
                   </div>
                 </li>{' '}
@@ -235,15 +223,14 @@ function OrderPage() {
                     <div>${totalPrice}</div>
                   </div>
                 </li>
-                {/*TODO: Stripe payment goes here */}
                 {session.user.isAdmin && order.isPaid && !order.isDelivered && (
                   <li>
                     {loadingDeliver && <div>Loading...</div>}
                     <button
-                      onClick={deliveredOrderHandler}
-                      className="primary-btn w-full capitalize"
+                      className="primary-button w-full"
+                      onClick={deliverOrderHandler}
                     >
-                      deliver order
+                      Deliver Order
                     </button>
                   </li>
                 )}
@@ -258,3 +245,207 @@ function OrderPage() {
 
 OrderPage.auth = true
 export default OrderPage
+
+//   const { data: session } = useSession()
+//   const { query } = useRouter()
+//   const orderId = query.id
+
+//   const [
+//     {
+//       loading,
+//       error,
+//       order,
+//       // successPay,
+//       // loadingPay,
+//       loadingDeliver,
+//       successDeliver,
+//     },
+//     dispatch,
+//   ] = useReducer(reducer, {
+//     loading: true,
+//     order: {},
+//     error: '',
+//   })
+
+//   useEffect(() => {
+//     const fetchOrder = async () => {
+//       try {
+//         dispatch({ type: 'FETCH_REQUEST' })
+//         const { data } = await axios.get(`/api/orders/${orderId}`)
+//         dispatch({ type: 'FETCH_SUCCESS', payload: data })
+//       } catch (err) {
+//         dispatch({ type: 'FETCH_FAIL', payload: getError(err) })
+//       }
+//     }
+
+//     if (!order._id || successDeliver || (order._id && order._id !== orderId)) {
+//       fetchOrder()
+//       // TODO:stipe payment condition here
+
+//       if (successDeliver) {
+//         dispatch({ type: 'DELIVER_RESET' })
+//       }
+//     }
+//   }, [order, orderId, successDeliver])
+//   const {
+//     shippingAddress,
+//     paymentMethod,
+//     orderItems,
+//     itemsPrice,
+//     taxPrice,
+//     shippingPrice,
+//     totalPrice,
+//     isPaid,
+//     paidAt,
+//     isDelivered,
+//     deliveredAt,
+//   } = order
+
+//   async function deliveredOrderHandler() {
+//     try {
+//       dispatch({ type: 'DELIVER_REQUEST' })
+//       const { data } = await axios.put(
+//         `/api/admin/orders/${order._id}/deliver`,
+//         {}
+//       )
+//       dispatch({ type: 'DELIVER_SUCCESS', payload: data })
+//       toast.success('Order delivered successfully')
+//     } catch (err) {
+//       dispatch({ type: 'DELIVER_FAIL, payload: getError(err)' })
+//       toast.error(getError(err))
+//     }
+//   }
+
+//   return (
+//     <Layout title={`Order ${orderId}`}>
+//       <h1 className="mb-4 text-xl">{`Order ${orderId}`}</h1>
+//       {loading ? (
+//         <div>Loading...</div>
+//       ) : error ? (
+//         <div className="alert-error">{error}</div>
+//       ) : (
+//         <div className="grid md:grid-cols-4 md:gap-5">
+//           <div className="overflow-x-auto md:col-span-3">
+//             <div className="card p-5">
+//               <h2 className="mb-2 text-lg capitalize font-bold">
+//                 shipping address
+//               </h2>
+//               <div>
+//                 {shippingAddress.fullName}, {shippingAddress.address},{' '}
+//                 {shippingAddress.city}, {shippingAddress.postalCode},{' '}
+//                 {shippingAddress.country}
+//               </div>
+//               {isDelivered ? (
+//                 <div className="alert-success">Delivered at {deliveredAt}</div>
+//               ) : (
+//                 <div className="alert-error">Not delivered</div>
+//               )}
+//             </div>
+
+//             {/* Payment */}
+//             <div className="card p-5">
+//               <h2 className="mb-2 text-lg font-bold">Payment Method</h2>
+//               <div>{paymentMethod}</div>
+//               {isPaid ? (
+//                 <div className="alert-success">Paid at {paidAt}</div>
+//               ) : (
+//                 <div className="alert-error">Not Paid</div>
+//               )}
+//             </div>
+
+//             {/* Order Items */}
+//             <div className="card overflow-x-auto p-5">
+//               <h2 className="mb-2 text-lg capitalize font-bold">order items</h2>
+//               <table className="min-w-full">
+//                 <thead className="border-b">
+//                   <tr>
+//                     <th className="px-5 text-left">Item</th>
+//                     <th className="p-5 text-right">Quantity</th>
+//                     <th className="p-5 text-right">Price</th>
+//                     <th className="p-5 text-right">Subtotal</th>
+//                   </tr>
+//                 </thead>
+
+//                 <tbody>
+//                   {orderItems.map((item) => (
+//                     <tr key={item._id} className="border-b">
+//                       <td>
+//                         <Link
+//                           href={`/product/${item.slug}`}
+//                           className="flex items-center"
+//                           legacyBehavior
+//                         >
+//                           <Image
+//                             src={item.Image}
+//                             alt={item.name}
+//                             width={50}
+//                             height={50}
+//                           />
+//                           &nbsp;
+//                           {item.name}
+//                         </Link>
+//                       </td>
+
+//                       <td className="p-5 text-right">{item.quantity}</td>
+//                       <td className="p-5 text-right">${item.price}</td>
+//                       <td className="p-5 text-right">
+//                         ${item.quantity * item.price}
+//                       </td>
+//                     </tr>
+//                   ))}
+//                 </tbody>
+//               </table>
+//             </div>
+//           </div>
+
+//           {/* Order Summary */}
+//           <div>
+//             <div className="card p-5">
+//               <h2 className="mb-2 text-lg capitalize font-bold text-center">
+//                 order summary
+//               </h2>
+//               <ul>
+//                 <li>
+//                   <div className="mb-2 flex justify-between">
+//                     <div>Item</div>
+//                     <div>${itemsPrice}</div>
+//                   </div>
+//                 </li>{' '}
+//                 <li>
+//                   <div className="mb-2 flex justify-between">
+//                     <div>Tax</div>
+//                     <div>${taxPrice}</div>
+//                   </div>
+//                 </li>
+//                 <li>
+//                   <div className="mb-2 flex justify-between">
+//                     <div>Shipping</div>
+//                     <div>${shippingPrice}</div>
+//                   </div>
+//                 </li>
+//                 <li>
+//                   <div className="mb-2 flex justify-between">
+//                     <div>Total</div>
+//                     <div>${totalPrice}</div>
+//                   </div>
+//                 </li>
+//                 {/*TODO: Stripe payment goes here */}
+//                 {session.user.isAdmin && order.isPaid && !order.isDelivered && (
+//                   <li>
+//                     {loadingDeliver && <div>Loading...</div>}
+//                     <button
+//                       onClick={deliveredOrderHandler}
+//                       className="primary-btn w-full capitalize"
+//                     >
+//                       deliver order
+//                     </button>
+//                   </li>
+//                 )}
+//               </ul>
+//             </div>
+//           </div>
+//         </div>
+//       )}
+//     </Layout>
+//   )
+// }

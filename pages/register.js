@@ -150,5 +150,5 @@ export default function RegisterPage() {
         </div>
       </form>
     </Layout>
-  )
+  );
 }

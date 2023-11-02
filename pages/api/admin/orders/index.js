@@ -1,11 +1,11 @@
 import Order from '@/models/Order'
 import db from '@/utils/db'
-import { getSession } from 'next-auth/react'
+import { getToken } from 'next-auth/jwt'
 
 const handler = async (req, res) => {
-  const session = await getSession({ req })
+  const user = await getToken({ req })
 
-  if (!session || (session && !session.user.isAdmin)) {
+  if (!user || (user && !user.isAdmin)) {
     return res.status(401).send({ message: 'signin required' })
   }
 

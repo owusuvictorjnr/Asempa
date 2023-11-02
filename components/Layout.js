@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import DropdownLink from './DropdownLink'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
-import { SearchIcon } from '@heroicons/react/outline'
+import SearchIcon from '@heroicons/react/24/outline/MagnifyingGlassIcon'
 
 export default function Layout({ children, title }) {
   const { status, data: session } = useSession()
@@ -46,17 +46,19 @@ export default function Layout({ children, title }) {
 
       <div className="flex min-h-screen flex-col justify-between">
         <headers>
-          <nav className="flex h-12 justify-between  items-center shadow-md px-10 ">
-            <Link
-              href="/"
-              className="text-lg font-bold capitalize text-yellow-500  flex"
-            >
-              asempa brand
-            </Link>
+          <nav className="flex h-12 justify-between  items-center shadow-md px-10">
+            <div className="flex items-center z-10">
+              <Link
+                href="/"
+                className="text-lg font-bold capitalize text-yellow-500 flex"
+              >
+                asempa brand
+              </Link>
+            </div>
 
             {/* Search button */}
             <form
-              className="mx-auto hidden w-full justify-center md:flex"
+              className="mx-auto hidden justify-center md:flex"
               onSubmit={submitHandler}
             >
               <input
@@ -75,7 +77,7 @@ export default function Layout({ children, title }) {
               </button>
             </form>
 
-            <div>
+            <div className="flex items-center z-10">
               <Link href="/cart" className="p-2 text-blue-600">
                 Cart
                 {cartItemsCount > 0 && (
