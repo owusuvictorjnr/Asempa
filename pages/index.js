@@ -31,7 +31,12 @@ export default function Home({ products, featuredProducts }) {
 
   return (
     <Layout title="Home Page">
-      <Carousel showThumbs={false} autoPlay={true} infiniteLoop>
+      <Carousel
+        className="mt-[3rem]"
+        showThumbs={false}
+        autoPlay={true}
+        infiniteLoop
+      >
         {featuredProducts.map((product) => (
           <div key={product._id}>
             <Link
