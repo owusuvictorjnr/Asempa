@@ -96,6 +96,15 @@ function AdminUsersPage() {
                 users
               </Link>
             </li>
+
+            <li>
+              <Link
+                href="/admin/reviews"
+                className="capitalize font-bold text-blue-500"
+              >
+                reviews
+              </Link>
+            </li>
           </ul>
         </div>
 

@@ -98,6 +98,12 @@ function AdminDashboardPage() {
                 users
               </Link>
             </li>
+
+            <li>
+              <Link href="/admin/reviews" className="capitalize text-blue-500">
+                reviews
+              </Link>
+            </li>
           </ul>
         </div>
 
@@ -140,6 +146,14 @@ function AdminDashboardPage() {
                   <p>Users</p>
                   <Link href="/admin/users" className="text-blue-500">
                     View users
+                  </Link>
+                </div>
+
+                <div className="card m-5 p-5">
+                  <p className="text-3xl">{summary.usersCount}</p>
+                  <p>Reviews</p>
+                  <Link href="/admin/reviews" className="text-blue-500">
+                    View reviews
                   </Link>
                 </div>
               </div>

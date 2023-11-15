@@ -69,6 +69,12 @@ export default function AdminOrderPage() {
                 users
               </Link>
             </li>
+
+            <li>
+              <Link href="/admin/reviews" className="capitalize text-blue-500">
+                reviews
+              </Link>
+            </li>
           </ul>
         </div>
 
@@ -119,7 +125,11 @@ export default function AdminOrderPage() {
                       </td>
 
                       <td className="p-5">
-                        <Link href={`/order/${order._id}`} className='text-blue-500' passHref>
+                        <Link
+                          href={`/order/${order._id}`}
+                          className="text-blue-500"
+                          passHref
+                        >
                           Details
                         </Link>
                       </td>

@@ -123,12 +123,20 @@ export default function AdminProductsPage() {
                 users
               </Link>
             </li>
+
+            <li>
+              <Link href="/admin/reviews" className="capitalize text-blue-500">
+                reviews
+              </Link>
+            </li>
           </ul>
         </div>
 
         <div className="overflow-x-auto md:col-span-3">
           <div className="flex justify-between">
-            <hi className="mb-4 text-xl capitalize font-bold">admin products</hi>
+            <hi className="mb-4 text-xl capitalize font-bold">
+              admin products
+            </hi>
             {loadingDelete && <div className="">Deleting item...</div>}
             <button
               className="primary-btn"
@@ -176,7 +184,7 @@ export default function AdminProductsPage() {
                         </Link>
                         &nbsp;
                         <button
-                        type='button' 
+                          type="button"
                           onClick={() => deleteHandler(product._id)}
                           className="hover:text-red-500 capitalize default-btn"
                         >
