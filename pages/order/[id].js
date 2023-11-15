@@ -129,7 +129,7 @@ function OrderPage() {
         <div className="grid md:grid-cols-4 md:gap-5">
           <div className="overflow-x-auto md:col-span-3">
             <div className="card  p-5">
-              <h2 className="mb-2 text-lg">Shipping Address</h2>
+              <h2 className="mb-2 text-lg font-bold">Shipping Address</h2>
               <div>
                 {shippingAddress.fullName}, {shippingAddress.address},{' '}
                 {shippingAddress.city}, {shippingAddress.postalCode},{' '}
@@ -143,7 +143,7 @@ function OrderPage() {
             </div>
 
             <div className="card p-5">
-              <h2 className="mb-2 text-lg">Payment Method</h2>
+              <h2 className="mb-2 text-lg font-bold">Payment Method</h2>
               <div>{paymentMethod}</div>
               {isPaid ? (
                 <div className="alert-success">Paid at {paidAt}</div>
@@ -197,7 +197,9 @@ function OrderPage() {
           </div>
           <div>
             <div className="card  p-5">
-              <h2 className="mb-2 text-lg">Order Summary</h2>
+              <h2 className="mb-2 text-lg text-center font-bold lg:underline">
+                Order Summary
+              </h2>
               <ul>
                 <li>
                   <div className="mb-2 flex justify-between">
@@ -218,7 +220,7 @@ function OrderPage() {
                   </div>
                 </li>
                 <li>
-                  <div className="mb-2 flex justify-between">
+                  <div className="mb-2 flex justify-between font-bold">
                     <div>Total</div>
                     <div>${totalPrice}</div>
                   </div>
