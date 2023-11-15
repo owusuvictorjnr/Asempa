@@ -45,7 +45,7 @@ export default function Layout({ children, title }) {
       <ToastContainer position="bottom-center" limit={1} />
 
       <div className="flex min-h-screen flex-col justify-between">
-        <headers className=''>
+        <headers className="">
           <nav className="flex fixed top-0 bottom-0 bg-yellow-500 z-10 w-full h-12 justify-between  items-center shadow-md px-5">
             <div className="flex items-center z-10">
               <Link
@@ -126,6 +126,17 @@ export default function Layout({ children, title }) {
                         </DropdownLink>
                       </Menu.Item>
                     )}
+
+                    {/* {session.user.isAdmin && (
+                      <Menu.Item>
+                        <DropdownLink
+                          className="dropdown-link"
+                          href="/admin/reviews"
+                        >
+                          Reviews
+                        </DropdownLink>
+                      </Menu.Item>
+                    )} */}
 
                     {/* Log Out */}
                     <Menu.Item>
